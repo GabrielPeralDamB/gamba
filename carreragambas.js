@@ -43,6 +43,21 @@ bettingText.style.marginBottom = '20px';
 bettingText.innerText = 'Seleccione una gamba para apostar:';
 bettingScreen.appendChild(bettingText);
 
+// Crear elemento para mostrar el número de la gamba líder
+let leaderDisplay = document.createElement('div');
+leaderDisplay.id = 'leaderDisplay';
+leaderDisplay.style.position = 'absolute';
+leaderDisplay.style.top = '10px';
+leaderDisplay.style.left = '50%';
+leaderDisplay.style.transform = 'translateX(-50%)';
+leaderDisplay.style.zIndex = '20';
+leaderDisplay.style.fontSize = '48px';
+leaderDisplay.style.color = 'white';
+leaderDisplay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+leaderDisplay.style.padding = '10px';
+leaderDisplay.style.borderRadius = '10px';
+document.body.appendChild(leaderDisplay);
+
 const loader = new THREE.GLTFLoader();
 loader.load('prawn/scene.gltf', function(gltf) {
     const prawnModel = gltf.scene;
@@ -232,6 +247,9 @@ loader.load('prawn/scene.gltf', function(gltf) {
                     showEndButtons();
                 }
             });
+
+            // Actualizar el display del líder
+            leaderDisplay.innerText = `${leaderIndex + 1}`;
 
             // Actualizar posición de la cámara para seguir al líder
             const leaderX = horses[leaderIndex].position.x;

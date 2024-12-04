@@ -25,3 +25,11 @@ button:hover {
     background-color: #45a049; /* Darker green on hover */
 }
 
+#leaderDisplay {
+    font-size: 120px; /* Increase font size */
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+}
+
