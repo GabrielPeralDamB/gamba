@@ -152,6 +152,37 @@ loader.load('prawn/scene.gltf', function(gltf) {
         velocidadesAleatorias();
     }
 
+    function showEndButtons() {
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.position = 'absolute';
+        buttonContainer.style.top = '10px';
+        buttonContainer.style.right = '10px';
+        buttonContainer.style.zIndex = '20';
+        buttonContainer.style.display = 'flex';
+        buttonContainer.style.flexDirection = 'column';
+        buttonContainer.style.gap = '10px';
+
+        const exitButton = document.createElement('button');
+        exitButton.innerText = 'Salir';
+        exitButton.style.padding = '10px';
+        exitButton.style.fontSize = '16px';
+        exitButton.addEventListener('click', () => {
+            window.location.href = 'final.html';
+        });
+
+        const restartButton = document.createElement('button');
+        restartButton.innerText = 'Reiniciar';
+        restartButton.style.padding = '10px';
+        restartButton.style.fontSize = '16px';
+        restartButton.addEventListener('click', () => {
+            window.location.reload();
+        });
+
+        buttonContainer.appendChild(exitButton);
+        buttonContainer.appendChild(restartButton);
+        document.body.appendChild(buttonContainer);
+    }
+
     function animate() {
         requestAnimationFrame(animate);
         if (raceInProgress) {
@@ -198,6 +229,7 @@ loader.load('prawn/scene.gltf', function(gltf) {
                     } else {
                         alert(`¡Gamba ${leaderIndex + 1} ha ganado! ¡Has perdido la apuesta!`);
                     }
+                    showEndButtons();
                 }
             });
 
