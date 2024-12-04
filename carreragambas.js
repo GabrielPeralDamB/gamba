@@ -52,13 +52,14 @@ loader.load('prawn/scene.gltf', function(gltf) {
     const horses = [];
     const laneOffset = 2; // Desplazamiento para centrar en cada carril
     const colors = ['#FFFF00', '#FF0000', '#0000FF', '#800080', '#8B0000']; // Colores específicos
+    const shuffledColors = colors.sort(() => Math.random() - 0.5); // Mezclar colores aleatoriamente
     for (let i = 0; i < numHorses; i++) {
         const horse = prawnModel.clone();
         // Colocar la gamba en el centro de cada carril
         horse.position.set(-trackLength / 2, 0, (i - numHorses / 2) * 4 + laneOffset);
 
         // Cambiar color de la gamba
-        const color = new THREE.Color(colors[i % colors.length]);
+        const color = new THREE.Color(shuffledColors[i % shuffledColors.length]);
         horse.traverse((child) => {
             if (child.isMesh) {
                 child.material = child.material.clone();
