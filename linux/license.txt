@@ -1,0 +1,11 @@
+Model Information:
+* title:	Tux Penguin
+* source:	https://sketchfab.com/3d-models/tux-penguin-0e9e2902a7cb4684b11eb42d6dfc6655
+* author:	MysteryPancake (https://sketchfab.com/mysterypancake)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Tux Penguin" (https://sketchfab.com/3d-models/tux-penguin-0e9e2902a7cb4684b11eb42d6dfc6655) by MysteryPancake (https://sketchfab.com/mysterypancake) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

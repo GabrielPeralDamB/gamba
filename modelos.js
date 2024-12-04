@@ -2,6 +2,7 @@ let prawnModel = null;
 let marioModel = null;
 let bigchungus = null;
 let shrekModel = null;
+let mcqueenModel = null;
 
 function cargarModelos() {
     return new Promise((resolve, reject) => {
@@ -17,10 +18,17 @@ function cargarModelos() {
                 loader.load("prawn/scene.gltf", function (gltf) {
                     prawnModel = gltf.scene;
                     prawnModel.scale.set(0.0005, 0.0005, 0.0005);
-                    loader.load("shrek/scene.gltf", function (gltf) {
-                        shrekModel = gltf.scene;
-                        shrekModel.scale.set(4, 4, 4);
-                        resolve(true);
+                    loader.load("McQueen/scene.gltf", function (gltf) {
+                        mcqueenModel = gltf.scene;
+                        mcqueenModel.scale.set(0.8, 0.8, 0.8);
+                        loader.load("shrek/scene.gltf", function (gltf) {
+                            shrekModel = gltf.scene;
+                            shrekModel.scale.set(4, 4, 4);
+                            resolve(true);
+                        }, undefined, function (error) {
+                            console.error(error);
+                            reject(false);
+                        });
                     }, undefined, function (error) {
                         console.error(error);
                         reject(false);
@@ -40,4 +48,4 @@ function cargarModelos() {
     });
 }
 
-export { prawnModel, marioModel, bigchungus, shrekModel, cargarModelos };
+export { prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, cargarModelos };

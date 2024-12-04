@@ -1,4 +1,4 @@
-import { cargarModelos, prawnModel, marioModel, bigchungus, shrekModel } from './modelos.js';
+import { cargarModelos, prawnModel, marioModel, bigchungus, shrekModel,mcqueenModel } from './modelos.js';
 
 let speeds = [0.01, 0.02, 0.05, 0.07, 0.1]; // Velocidades iniciales
 
@@ -77,7 +77,8 @@ async function main() {
             const shuffledColors = colors.sort(() => Math.random() - 0.5); // Mezclar colores aleatoriamente
             const marioIndex = Math.floor(Math.random() * numHorses); // Índice aleatorio para Mario
             const bigChungusIndex = Math.floor(Math.random() * numHorses);
-            const shrekIndex = Math.floor(Math.random() * numHorses);  // Índice aleatorio para Big Chungus
+            const shrekIndex = Math.floor(Math.random() * numHorses); 
+            const mcqueenIndex = Math.floor(Math.random() * numHorses);  // Índice aleatorio para Big Chungus
 
             for (let i = 0; i < numHorses; i++) {
                 let horse;
@@ -85,6 +86,8 @@ async function main() {
                     horse = marioModel.clone();
                 } else if (i === bigChungusIndex && bigchungus) {
                     horse = bigchungus.clone();
+                }else if (i === mcqueenIndex && mcqueenModel) {
+                        horse = mcqueenModel.clone();
                 } else if (i === shrekIndex && shrekModel) {
                     horse = shrekModel.clone();
                 } else {
@@ -127,8 +130,10 @@ async function main() {
                     selectionHorse = marioModel.clone();
                 } else if (i === bigChungusIndex && bigchungus) {
                     selectionHorse = bigchungus.clone();
-                }else if (i === shrekIndex && shrekModel) {
-                        selectionHorse = shrekModel.clone();
+                }else if (i === mcqueenIndex && mcqueenModel) {
+                        selectionHorse = mcqueenModel.clone();
+                } else if (i === shrekIndex && shrekModel) {
+                    selectionHorse = shrekModel.clone();
                 } else {
                     selectionHorse = prawnModel.clone();
                 }
@@ -162,7 +167,7 @@ async function main() {
                 prawnNumber.style.color = "black";
                 prawnNumber.style.fontSize = "18px";
                 prawnNumber.style.marginTop = "10px";
-                prawnNumber.innerText = i === marioIndex ? `Mario` : i === bigChungusIndex ? `Big Chungus`: i === shrekIndex ? `Shrek` : `Gamba ${i + 1}`;
+                prawnNumber.innerText = i === marioIndex ? `Mario` : i === bigChungusIndex ? `Big Chungus`: i === mcqueenIndex ? `Mc Queen`: i === shrekIndex ? `Shrek` : `Gamba ${i + 1}`;
                 prawnDiv.appendChild(prawnNumber);
 
                 prawnDiv.addEventListener("click", function () {
@@ -277,11 +282,24 @@ async function main() {
                             horse.rotation.y = -Math.PI / 2; // Mirar al frente
                         }
 
+                        // Animar los brazos de Shrek
+                        if (index === shrekIndex) {
+                            const leftArm = horse.getObjectByName("LeftArm");
+                            const rightArm = horse.getObjectByName("RightArm");
+                            if (leftArm) {
+                                console.log("LeftArm found");
+                                leftArm.rotation.x = Math.sin(Date.now() * 0.01) * 0.5;
+                            }
+                            if (rightArm) {
+                                console.log("RightArm found");
+                                rightArm.rotation.x = Math.sin(Date.now() * 0.01) * 0.5;
+                            }
+                        }
+
                         // Cambiar velocidades aleatoriamente
                         if (Math.random() < 0.01) {
                             speeds[index] = Math.random() * 0.1;
                         }
-                        
 
                         // Ajustar rotación de Mario si está en movimiento
                         if (index === marioIndex && speeds[index] > velocidadSpin) {
@@ -294,6 +312,10 @@ async function main() {
                         }
 
                         if (index === shrekIndex && speeds[index] > velocidadSpin) {
+                            horse.rotation.y = Math.PI / 2; // Mirar al frente
+                        }
+                        
+                        if (index === mcqueenIndex && speeds[index] > velocidadSpin) {
                             horse.rotation.y = Math.PI / 2; // Mirar al frente
                         }
 
