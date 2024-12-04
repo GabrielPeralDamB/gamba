@@ -274,12 +274,10 @@ loader.load("prawn/scene.gltf", function (gltf) {
 
                     // Cambiar velocidades aleatoriamente
                     if (Math.random() < 0.01) {
-                        if (Math.random() <= 0.01) {
-                            speeds[index] = 0.01;
-                        } else {
-                            const positionIndex = horses.length - 1 - horses.indexOf(horse);
-                            speeds[index] = Math.random() * 0.1 + rebufo * positionIndex;
-                        }
+                        
+                            //const positionIndex = horses.length - 1 - horses.indexOf(horse);
+                            speeds[index] = Math.random() * 0.1 /*+ rebufo * positionIndex*/;
+                        
                     }
                     console.log(speeds[index]);
 
