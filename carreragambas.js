@@ -1,3 +1,5 @@
+import { cargarModelos, prawnModel, marioModel, bigchungus, shrekModel } from './modelos.js';
+
 let speeds = [0.01, 0.02, 0.05, 0.07, 0.1]; // Velocidades iniciales
 
 function velocidadesAleatorias() {
@@ -60,35 +62,31 @@ leaderDisplay.style.padding = "10px";
 leaderDisplay.style.borderRadius = "10px";
 document.body.appendChild(leaderDisplay);
 
-const loader = new THREE.GLTFLoader();
-loader.load("prawn/scene.gltf", function (gltf) {
-    loader.load("mario/scene.gltf", function (marioGltf) {
-        loader.load("bigchungus/scene.gltf", function (bigChungusGltf) {
-            const prawnModel = gltf.scene;
-            prawnModel.scale.set(0.0005, 0.0005, 0.0005); // Ajustar escala del modelo
-
-            // Cargar modelo 3D de Mario
-            const marioModel = marioGltf.scene;
-            marioModel.scale.set(0.5, 0.5, 0.5);
-
-            // Cargar modelo 3D de Big Chungus
-            const bigChungusModel = bigChungusGltf.scene;
-            bigChungusModel.scale.set(5, 5, 5);
-
+async function main() {
+    try {
+        const modelosCargados = await cargarModelos();
+        if (modelosCargados) {
+            console.log("Todos los modelos se han cargado correctamente.");
+            console.log(prawnModel);
+            console.log(marioModel);
+            console.log(bigchungus);
             // Crear gambas
             const horses = [];
             const laneOffset = 2; // Desplazamiento para centrar en cada carril
             const colors = ["#FFFF00", "#FF0000", "#0000FF", "#800080", "#8B0000"]; // Colores específicos
             const shuffledColors = colors.sort(() => Math.random() - 0.5); // Mezclar colores aleatoriamente
             const marioIndex = Math.floor(Math.random() * numHorses); // Índice aleatorio para Mario
-            const bigChungusIndex = Math.floor(Math.random() * numHorses); // Índice aleatorio para Big Chungus
+            const bigChungusIndex = Math.floor(Math.random() * numHorses);
+            const shrekIndex = Math.floor(Math.random() * numHorses);  // Índice aleatorio para Big Chungus
 
             for (let i = 0; i < numHorses; i++) {
                 let horse;
                 if (i === marioIndex && marioModel) {
                     horse = marioModel.clone();
-                } else if (i === bigChungusIndex && bigChungusModel) {
-                    horse = bigChungusModel.clone();
+                } else if (i === bigChungusIndex && bigchungus) {
+                    horse = bigchungus.clone();
+                } else if (i === shrekIndex && shrekModel) {
+                    horse = shrekModel.clone();
                 } else {
                     horse = prawnModel.clone();
                 }
@@ -105,7 +103,7 @@ loader.load("prawn/scene.gltf", function (gltf) {
                 horse.traverse((child) => {
                     if (child.isMesh) {
                         child.material = child.material.clone();
-                        child.material.color.lerp(color, 0.5); // Aplicar color débil
+                        //child.material.color.lerp(color, 0.5); // Aplicar color débil
                     }
                 });
 
@@ -127,8 +125,10 @@ loader.load("prawn/scene.gltf", function (gltf) {
                 let selectionHorse;
                 if (i === marioIndex && marioModel) {
                     selectionHorse = marioModel.clone();
-                } else if (i === bigChungusIndex && bigChungusModel) {
-                    selectionHorse = bigChungusModel.clone();
+                } else if (i === bigChungusIndex && bigchungus) {
+                    selectionHorse = bigchungus.clone();
+                }else if (i === shrekIndex && shrekModel) {
+                        selectionHorse = shrekModel.clone();
                 } else {
                     selectionHorse = prawnModel.clone();
                 }
@@ -162,7 +162,7 @@ loader.load("prawn/scene.gltf", function (gltf) {
                 prawnNumber.style.color = "black";
                 prawnNumber.style.fontSize = "18px";
                 prawnNumber.style.marginTop = "10px";
-                prawnNumber.innerText = i === marioIndex ? `Mario` : i === bigChungusIndex ? `Big Chungus` : `Gamba ${i + 1}`;
+                prawnNumber.innerText = i === marioIndex ? `Mario` : i === bigChungusIndex ? `Big Chungus`: i === shrekIndex ? `Shrek` : `Gamba ${i + 1}`;
                 prawnDiv.appendChild(prawnNumber);
 
                 prawnDiv.addEventListener("click", function () {
@@ -293,6 +293,10 @@ loader.load("prawn/scene.gltf", function (gltf) {
                             horse.rotation.y = Math.PI / 2; // Mirar al frente
                         }
 
+                        if (index === shrekIndex && speeds[index] > velocidadSpin) {
+                            horse.rotation.y = Math.PI / 2; // Mirar al frente
+                        }
+
                         // Actualizar líder
                         if (horse.position.x > horses[leaderIndex].position.x) {
                             leaderIndex = index;
@@ -333,6 +337,10 @@ loader.load("prawn/scene.gltf", function (gltf) {
                 camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
             });
-        });
-    });
-});
+        }
+    } catch (error) {
+        console.error("Error al cargar los modelos:", error);
+    }
+}
+
+main();
