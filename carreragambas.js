@@ -51,10 +51,21 @@ loader.load('prawn/scene.gltf', function(gltf) {
     // Crear gambas
     const horses = [];
     const laneOffset = 2; // Desplazamiento para centrar en cada carril
+    const colors = ['#FFFF00', '#FF0000', '#0000FF', '#800080', '#8B0000']; // Colores específicos
     for (let i = 0; i < numHorses; i++) {
         const horse = prawnModel.clone();
         // Colocar la gamba en el centro de cada carril
         horse.position.set(-trackLength / 2, 0, (i - numHorses / 2) * 4 + laneOffset);
+
+        // Cambiar color de la gamba
+        const color = new THREE.Color(colors[i % colors.length]);
+        horse.traverse((child) => {
+            if (child.isMesh) {
+                child.material = child.material.clone();
+                child.material.color.lerp(color, 0.5); // Aplicar color débil
+            }
+        });
+
         horses.push(horse);
         scene.add(horse);
 
@@ -69,6 +80,12 @@ loader.load('prawn/scene.gltf', function(gltf) {
         // Añadir modelo de gamba a la escena de selección
         let selectionHorse = prawnModel.clone();
         selectionHorse.scale.set(0.0001, 0.0001, 0.0001); // Reducir tamaño del modelo en la selección
+        selectionHorse.traverse((child) => {
+            if (child.isMesh) {
+                child.material = child.material.clone();
+                child.material.color.lerp(color, 0.5); // Aplicar color débil
+            }
+        });
         selectionScene.add(selectionHorse);
 
         // Crear div para la selección
@@ -106,8 +123,6 @@ loader.load('prawn/scene.gltf', function(gltf) {
         // Animar modelo de gamba en la selección con animaciones aleatorias
         function animateSelection() {
             requestAnimationFrame(animateSelection);
-            
-    
             selectionHorse.rotation.y += 0.01;
             selectionRenderer.render(selectionScene, selectionCamera);
         }
