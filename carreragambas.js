@@ -1,9 +1,22 @@
-const speeds = [0.01,0.02,0.05,0.07,0.1]; // Velocidades iniciales
+let speeds = [0.01,0.02,0.05,0.07,0.1]; // Velocidades iniciales
+
+function velocidadesAleatorias(){
+    for (let i = 0; i < 5; i++) {
+        speeds[i] = Math.random() * 0.1;
+    }
+}
+
+velocidadesAleatorias();
 
 const velocidadSpin=0.01;
 const velocidadWalk=[0.01,0.04];
 const velocidadGallop=[0.04,0.08];
 const velocidadFast=0.08;
+/*
+const velocidadSpin=1;
+const velocidadWalk=[1,1];
+const velocidadGallop=[1,1];
+const velocidadFast=1;*/
 
 // Cargar modelo 3D de la gamba
 const loader = new THREE.GLTFLoader();
@@ -103,6 +116,7 @@ loader.load('prawn/scene.gltf', function(gltf) {
             horses.forEach((horse, index) => {
                 horse.position.x = -trackLength / 2; // Reiniciar posiciones
             });
+            velocidadesAleatorias();
         }
     });
 
