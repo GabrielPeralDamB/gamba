@@ -1,5 +1,10 @@
 const speeds = [0.01,0.02,0.05,0.07,0.1]; // Velocidades iniciales
 
+const velocidadSpin=0.01;
+const velocidadWalk=[0.01,0.04];
+const velocidadGallop=[0.04,0.08];
+const velocidadFast=0.08;
+
 // Cargar modelo 3D de la gamba
 const loader = new THREE.GLTFLoader();
 loader.load('prawn/scene.gltf', function(gltf) {
@@ -40,23 +45,24 @@ loader.load('prawn/scene.gltf', function(gltf) {
             horses.forEach((horse, index) => {
                 horse.position.x += speeds[index];
 
-                //Animaciones aleatorias
-                if (speeds[index] > 0.01&&speeds[index]<0.06) {
-                    prawnModel.rotation.y = -Math.PI / 2; 
+                // Animaciones aleatorias
+                if (speeds[index] > velocidadWalk[0] && speeds[index] < velocidadWalk[1]) {
                     horse.rotation.z = Math.sin(Date.now() * 0.01 * animations[index].speed) * 0.1;
-                }
-                if (speeds[index] >= 0.06&&speeds[index]<0.09) {
-                    prawnModel.rotation.y = -Math.PI / 2; 
-                    horse.position.y = Math.abs(Math.sin(Date.now() * 0.01 * animations[index].speed)) * 0.5;
-                }
-                if (speeds[index]<=0.01) {
-                    horse.rotation.y += 0.1 * animations[index].speed;
-                }
-                if (speeds[index] >= 0.09) {
-                    prawnModel.rotation.y = -Math.PI / 2; 
+                    horse.rotation.y = -Math.PI / 2; // Mirar al frente
+                } else if (speeds[index] >= velocidadGallop[0] && speeds[index] < velocidadGallop[1]) {
                     horse.position.y = Math.sin(Date.now() * 0.01 * animations[index].speed) * 0.1;
                     horse.position.y = Math.abs(Math.sin(Date.now() * 0.01 * animations[index].speed)) * 0.5;
                     horse.rotation.z = Math.sin(Date.now() * 0.01 * animations[index].speed) * 0.1;
+                    horse.rotation.y = -Math.PI / 2;// Mirar al frente
+                } else if (speeds[index] <= velocidadSpin) {
+                    horse.rotation.y += 0.1 * animations[index].speed;
+                } else if (speeds[index] >= velocidadFast) {
+                    horse.position.y = Math.sin(Date.now() * 0.01 * animations[index].speed) * 0.3;
+                    horse.position.y = Math.abs(Math.sin(Date.now() * 0.01 * animations[index].speed)) * 0.8;
+                    horse.rotation.z = Math.sin(Date.now() * 0.01 * animations[index].speed) * 0.3;
+                    horse.rotation.y = -Math.PI / 2;// Mirar al frente
+                } else {
+                    horse.rotation.y = -Math.PI / 2; // Mirar al frente
                 }
 
                 
@@ -65,6 +71,8 @@ loader.load('prawn/scene.gltf', function(gltf) {
                     speeds[index] = Math.random() * 0.1;
                     console.log(speeds[index]);
                 }
+
+                
 
                 // Actualizar líder
                 if (horse.position.x > horses[leaderIndex].position.x) {
