@@ -61,9 +61,10 @@ loader.load('prawn/scene.gltf', function(gltf) {
         // Crear escena y renderizador para la selección
         let selectionScene = new THREE.Scene();
         let selectionCamera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-        selectionCamera.position.z = 1;
-        let selectionRenderer = new THREE.WebGLRenderer({ antialias: true });
+        selectionCamera.position.set(0, 0.5, 1); // Ajustar posición de la cámara
+        let selectionRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         selectionRenderer.setSize(100, 100);
+        selectionRenderer.setClearColor(0x000000, 0); // Hacer el fondo transparente
 
         // Añadir modelo de gamba a la escena de selección
         let selectionHorse = prawnModel.clone();
@@ -102,6 +103,7 @@ loader.load('prawn/scene.gltf', function(gltf) {
         function animateSelection() {
             requestAnimationFrame(animateSelection);
             selectionHorse.rotation.y += 0.01;
+            selectionHorse.position.y = Math.sin(Date.now() * 0.005) * 0.05; // Oscilar verticalmente
             selectionRenderer.render(selectionScene, selectionCamera);
         }
         animateSelection();
