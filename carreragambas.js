@@ -68,6 +68,7 @@ loader.load('prawn/scene.gltf', function(gltf) {
 
         // Añadir modelo de gamba a la escena de selección
         let selectionHorse = prawnModel.clone();
+        selectionHorse.scale.set(0.0001, 0.0001, 0.0001); // Reducir tamaño del modelo en la selección
         selectionScene.add(selectionHorse);
 
         // Crear div para la selección
@@ -102,11 +103,12 @@ loader.load('prawn/scene.gltf', function(gltf) {
 
         bettingScreen.appendChild(prawnDiv);
 
-        // Animar modelo de gamba en la selección
+        // Animar modelo de gamba en la selección con animaciones aleatorias
         function animateSelection() {
             requestAnimationFrame(animateSelection);
+            
+    
             selectionHorse.rotation.y += 0.01;
-            selectionHorse.position.y = Math.sin(Date.now() * 0.005) * 0.05; // Oscilar verticalmente
             selectionRenderer.render(selectionScene, selectionCamera);
         }
         animateSelection();
