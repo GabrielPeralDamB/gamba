@@ -34,6 +34,20 @@ for (let i = 1; i < numHorses; i++) {
     scene.add(line);
 }
 
+// Agregar líneas de espacio avanzado a lo largo de la pista
+const spaceLineMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+const spaceLineWidth = 0.1; // Ancho muy fino
+const spaceLineLength = trackWidth;
+const spaceLineSpacing = 10; // Espaciado entre líneas de espacio avanzado
+
+for (let i = 1; i < trackLength / spaceLineSpacing; i++) {
+    const spaceLineGeometry = new THREE.PlaneGeometry(spaceLineWidth, spaceLineLength);
+    const spaceLine = new THREE.Mesh(spaceLineGeometry, spaceLineMaterial);
+    spaceLine.rotation.x = -Math.PI / 2;
+    spaceLine.position.set(-trackLength / 2 + i * spaceLineSpacing, 0.01, 0);
+    scene.add(spaceLine);
+}
+
 // Crear números de carril en el suelo
 const numberMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
 const numberSize = 2; // Tamaño de los números
