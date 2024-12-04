@@ -80,6 +80,9 @@ loader.load('prawn/scene.gltf', function(gltf) {
         prawnDiv.style.flexDirection = 'column';
         prawnDiv.style.alignItems = 'center';
         prawnDiv.style.backgroundColor = 'white';
+        prawnDiv.style.border = '2px solid #4CAF50'; // Border color
+        prawnDiv.style.borderRadius = '10px'; // Rounded corners
+        prawnDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)'; // Shadow effect
         prawnDiv.dataset.index = i;
         prawnDiv.appendChild(selectionRenderer.domElement);
 
