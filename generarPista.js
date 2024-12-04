@@ -34,6 +34,43 @@ for (let i = 1; i < numHorses; i++) {
     scene.add(line);
 }
 
+// Crear números de carril en el suelo
+const numberMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+const numberSize = 2; // Tamaño de los números
+
+for (let i = 0; i < numHorses; i++) {
+    const laneNumber = (i + 1).toString();
+    const numberGeometry = new THREE.PlaneGeometry(numberSize, numberSize);
+    const numberTexture = new THREE.CanvasTexture(createNumberTexture(laneNumber));
+    const numberMaterialInstance = new THREE.MeshStandardMaterial({ map: numberTexture });
+
+    // Número al principio del carril
+    const numberMeshStart = new THREE.Mesh(numberGeometry, numberMaterialInstance);
+    numberMeshStart.rotation.x = -Math.PI / 2;
+    numberMeshStart.position.set(-trackLength / 2 + 2, 0.01, (i - numHorses / 2) * 4 + 2);
+    scene.add(numberMeshStart);
+
+    // Número al final del carril
+    const numberMeshEnd = new THREE.Mesh(numberGeometry, numberMaterialInstance);
+    numberMeshEnd.rotation.x = -Math.PI / 2;
+    numberMeshEnd.position.set(trackLength / 2 - 4, 0.01, (i - numHorses / 2) * 4 + 2);
+    scene.add(numberMeshEnd);
+}
+
+// Función para crear la textura del número
+function createNumberTexture(number) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 256;
+    const context = canvas.getContext('2d');
+    context.fillStyle = 'white';
+    context.font = '200px Arial';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(number, canvas.width / 2, canvas.height / 2);
+    return canvas;
+}
+
 // Línea de meta
 const finishLineGeometry = new THREE.PlaneGeometry(1, trackWidth);
 const finishLineMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
@@ -41,3 +78,4 @@ const finishLine = new THREE.Mesh(finishLineGeometry, finishLineMaterial);
 finishLine.rotation.x = -Math.PI / 2;
 finishLine.position.set(trackLength / 2 - 2, 0.01, 0);
 scene.add(finishLine);
+
