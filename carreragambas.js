@@ -281,7 +281,7 @@ loader.load("prawn/scene.gltf", function (gltf) {
                         if (Math.random() < 0.01) {
                             speeds[index] = Math.random() * 0.1;
                         }
-                        console.log(speeds[index]);
+                        
 
                         // Ajustar rotación de Mario si está en movimiento
                         if (index === marioIndex && speeds[index] > velocidadSpin) {
