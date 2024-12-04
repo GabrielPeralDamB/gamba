@@ -5,6 +5,34 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+// Posición inicial de la cámara
+camera.position.set(0, 50, 100);
+camera.lookAt(0, 0, 0);
+
+// Controles de la cámara
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; // Habilitar amortiguación (inercia)
+controls.dampingFactor = 0.05; // Factor de amortiguación más suave
+controls.screenSpacePanning = true; // Permitir el desplazamiento en el espacio de la pantalla
+controls.maxPolarAngle = Math.PI / 2; // Limitar el ángulo polar máximo
+controls.enableZoom = true; // Habilitar zoom
+controls.zoomSpeed = 0.5; // Reducir la velocidad del zoom
+controls.enableRotate = true; // Habilitar rotación
+controls.rotateSpeed = 0.3; // Reducir la velocidad de rotación
+controls.keyPanSpeed = 50; // Velocidad de desplazamiento con teclas
+
+// Configurar controles personalizados
+controls.mouseButtons = {
+    LEFT: THREE.MOUSE.PAN, // Mover en el eje X e Y con el botón izquierdo
+    MIDDLE: THREE.MOUSE.DOLLY, // Acercar/alejar con la rueda del ratón
+    RIGHT: THREE.MOUSE.ROTATE // Rotar con el botón derecho
+};
+
+controls.touches = {
+    ONE: THREE.TOUCH.PAN, // Mover en el eje X e Y con un toque
+    TWO: THREE.TOUCH.DOLLY_ROTATE // Acercar/alejar y rotar con dos toques
+};
+
 // Iluminación
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
 scene.add(ambientLight);
@@ -92,4 +120,12 @@ const finishLine = new THREE.Mesh(finishLineGeometry, finishLineMaterial);
 finishLine.rotation.x = -Math.PI / 2;
 finishLine.position.set(trackLength / 2 - 2, 0.01, 0);
 scene.add(finishLine);
+
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update(); // Actualizar controles
+    renderer.render(scene, camera);
+}
+
+animate();
 
