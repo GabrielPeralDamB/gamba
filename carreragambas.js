@@ -1,4 +1,4 @@
-
+const speeds = [0.01,0.02,0.05,0.07,0.1]; // Velocidades iniciales
 
 // Cargar modelo 3D de la gamba
 const loader = new THREE.GLTFLoader();
@@ -24,13 +24,13 @@ loader.load('prawn/scene.gltf', function(gltf) {
 
     // Animar la carrera
     let raceInProgress = false;
-    const speeds = horses.map(() => Math.random() * 0.1 + 0.02); // Velocidades iniciales
+    //const speeds = horses.map(() => Math.random() * 0.1 + 0.02); // Velocidades iniciales
     const animations = horses.map(() => ({
-        oscillate: Math.random() > 0.5,
-        bounce: Math.random() > 0.5,
-        spin: Math.random() > 0.5,
-        gallop: Math.random() > 0.5,
-        speed: Math.random() * 0.05 + 0.01
+        oscillate: true,
+        bounce: true,
+        spin: true,
+        gallop: true,
+        speed: true
     }));
 
     function animate() {
@@ -40,23 +40,30 @@ loader.load('prawn/scene.gltf', function(gltf) {
             horses.forEach((horse, index) => {
                 horse.position.x += speeds[index];
 
-                // Animaciones aleatorias
-                if (animations[index].oscillate) {
+                //Animaciones aleatorias
+                if (speeds[index] > 0.01&&speeds[index]<0.06) {
+                    prawnModel.rotation.y = -Math.PI / 2; 
                     horse.rotation.z = Math.sin(Date.now() * 0.01 * animations[index].speed) * 0.1;
                 }
-                if (animations[index].bounce) {
+                if (speeds[index] >= 0.06&&speeds[index]<0.09) {
+                    prawnModel.rotation.y = -Math.PI / 2; 
                     horse.position.y = Math.abs(Math.sin(Date.now() * 0.01 * animations[index].speed)) * 0.5;
                 }
-                if (animations[index].spin) {
+                if (speeds[index]<=0.01) {
                     horse.rotation.y += 0.1 * animations[index].speed;
                 }
-                if (animations[index].gallop) {
-                    horse.position.y = Math.abs(Math.sin(Date.now() * 0.02 * animations[index].speed)) * 0.2;
+                if (speeds[index] >= 0.09) {
+                    prawnModel.rotation.y = -Math.PI / 2; 
+                    horse.position.y = Math.sin(Date.now() * 0.01 * animations[index].speed) * 0.1;
+                    horse.position.y = Math.abs(Math.sin(Date.now() * 0.01 * animations[index].speed)) * 0.5;
+                    horse.rotation.z = Math.sin(Date.now() * 0.01 * animations[index].speed) * 0.1;
                 }
 
+                
                 // Cambiar velocidades aleatoriamente
                 if (Math.random() < 0.01) {
-                    speeds[index] = Math.random() * 0.1 + 0.02;
+                    speeds[index] = Math.random() * 0.1;
+                    console.log(speeds[index]);
                 }
 
                 // Actualizar líder
