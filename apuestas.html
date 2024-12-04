@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla de Apuestas</title>
+    <link rel="stylesheet" href="apuestas.css">
+</head>
+<body>
+    <div class="betting-container">
+        <h1>Pantalla de Apuestas</h1>
+        <label for="numRaces">Número de Carreras:</label>
+        <select id="numRaces">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <table id="bettingTable">
+            <thead>
+                <tr>
+                    <th>Gamba</th>
+                    <th>Carrera 1</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Gamba 1</td>
+                    <td>
+                        <input type="number" min="0" placeholder="Cantidad">
+                        <input type="text" placeholder="Nombre">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gamba 2</td>
+                    <td>
+                        <input type="number" min="0" placeholder="Cantidad">
+                        <input type="text" placeholder="Nombre">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gamba 3</td>
+                    <td>
+                        <input type="number" min="0" placeholder="Cantidad">
+                        <input type="text" placeholder="Nombre">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gamba 4</td>
+                    <td>
+                        <input type="number" min="0" placeholder="Cantidad">
+                        <input type="text" placeholder="Nombre">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gamba 5</td>
+                    <td>
+                        <input type="number" min="0" placeholder="Cantidad">
+                        <input type="text" placeholder="Nombre">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button id="startRaceButton">Iniciar Carrera</button>
+    </div>
+    <script src="apuestas.js"></script>
+</body>
+</html>
