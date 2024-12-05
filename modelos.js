@@ -4,56 +4,69 @@ let bigchungus = null;
 let shrekModel = null;
 let mcqueenModel = null;
 let linuxModel = null;
+let mewTwoModel = null;
 
 function cargarModelos() {
     return new Promise((resolve, reject) => {
         const loader = new THREE.GLTFLoader();
-        loader.load("bigchungus/scene.gltf", function (gltf) {
-            bigchungus = gltf.scene;
-            bigchungus.scale.set(5, 5, 5);
+        const models = [
+            { name: "bigchungus", path: "bigchungus/scene.gltf", scale: 5 },
+            { name: "mario", path: "mario/scene.gltf", scale: 0.5 },
+            { name: "prawn", path: "prawn/scene.gltf", scale: 0.0005 },
+            { name: "mcqueen", path: "McQueen/scene.gltf", scale: 0.8 },
+            { name: "shrek", path: "shrek/scene.gltf", scale: 4 },
+            { name: "linux", path: "linux/scene.gltf", scale: 4 },
+            { name: "mewtwo", path: "mewtwo/scene.gltf", scale: 0.06}
+        ];
 
-            loader.load("mario/scene.gltf", function (gltf) {
-                marioModel = gltf.scene;
-                marioModel.scale.set(0.5, 0.5, 0.5);
+        const shuffledModels = models.sort(() => Math.random() - 0.5).slice(0, 5);
 
-                loader.load("prawn/scene.gltf", function (gltf) {
-                    prawnModel = gltf.scene;
-                    prawnModel.scale.set(0.0005, 0.0005, 0.0005);
-                    loader.load("McQueen/scene.gltf", function (gltf) {
+        const loadModel = (index) => {
+            if (index >= shuffledModels.length) {
+                const loadedModels = [prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, linuxModel, mewTwoModel].filter(m => m);
+                if (loadedModels.length < 5) {
+                    reject(new Error("No se han cargado suficientes modelos."));
+                } else {
+                    resolve(true);
+                }
+                return;
+            }
+
+            const model = shuffledModels[index];
+            loader.load(model.path, function (gltf) {
+                switch (model.name) {
+                    case "prawn":
+                        prawnModel = gltf.scene;
+                        break;
+                    case "mario":
+                        marioModel = gltf.scene;
+                        break;
+                    case "bigchungus":
+                        bigchungus = gltf.scene;
+                        break;
+                    case "shrek":
+                        shrekModel = gltf.scene;
+                        break;
+                    case "mcqueen":
                         mcqueenModel = gltf.scene;
-                        mcqueenModel.scale.set(0.8, 0.8, 0.8);
-                        loader.load("shrek/scene.gltf", function (gltf) {
-                            shrekModel = gltf.scene;
-                            shrekModel.scale.set(4, 4, 4);
-                            loader.load("linux/scene.gltf", function (gltf) {
-                                linuxModel = gltf.scene;
-                                linuxModel.scale.set(4, 4, 4);
-                                resolve(true);
-                            }, undefined, function (error) {
-                                console.error(error);
-                                reject(false);
-                            });
-                        }, undefined, function (error) {
-                            console.error(error);
-                            reject(false);
-                        });
-                    }, undefined, function (error) {
-                        console.error(error);
-                        reject(false);
-                    });
-                }, undefined, function (error) {
-                    console.error(error);
-                    reject(false);
-                });
+                        break;
+                    case "linux":
+                        linuxModel = gltf.scene;
+                        break;
+                    case "mewtwo":
+                        mewTwoModel = gltf.scene;
+                        break;
+                }
+                gltf.scene.scale.set(model.scale, model.scale, model.scale);
+                loadModel(index + 1);
             }, undefined, function (error) {
                 console.error(error);
-                reject(false);
+                loadModel(index + 1);
             });
-        }, undefined, function (error) {
-            console.error(error);
-            reject(false);
-        });
+        };
+
+        loadModel(0);
     });
 }
 
-export { prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, linuxModel, cargarModelos };
+export { prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, linuxModel, mewTwoModel, cargarModelos };

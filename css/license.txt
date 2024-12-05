@@ -1,0 +1,11 @@
+Model Information:
+* title:	Super Smash Bros Melee Mewtwo
+* source:	https://sketchfab.com/3d-models/super-smash-bros-melee-mewtwo-e97e6fc4d3f74eab8a565a8550d313de
+* author:	akennedy007 (https://sketchfab.com/akennedy007)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Super Smash Bros Melee Mewtwo" (https://sketchfab.com/3d-models/super-smash-bros-melee-mewtwo-e97e6fc4d3f74eab8a565a8550d313de) by akennedy007 (https://sketchfab.com/akennedy007) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,4 +1,4 @@
-import { cargarModelos, prawnModel, marioModel, bigchungus, shrekModel,mcqueenModel, linuxModel } from './modelos.js';
+import { cargarModelos, prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, linuxModel, mewTwoModel } from './modelos.js';
 
 let speeds = [0.01, 0.02, 0.05, 0.07, 0.1]; // Velocidades iniciales
 
@@ -70,32 +70,48 @@ async function main() {
             console.log(prawnModel);
             console.log(marioModel);
             console.log(bigchungus);
+            console.log(shrekModel);
+            console.log(mcqueenModel);
+            console.log(linuxModel);
+            console.log(mewTwoModel);
             // Crear gambas
             const horses = [];
             const laneOffset = 2; // Desplazamiento para centrar en cada carril
             const colors = ["#FFFF00", "#FF0000", "#0000FF", "#800080", "#8B0000"]; // Colores específicos
             const shuffledColors = colors.sort(() => Math.random() - 0.5); // Mezclar colores aleatoriamente
-            const marioIndex = Math.floor(Math.random() * numHorses); // Índice aleatorio para Mario
-            const bigChungusIndex = Math.floor(Math.random() * numHorses);
-            const shrekIndex = Math.floor(Math.random() * numHorses); 
-            const mcqueenIndex = Math.floor(Math.random() * numHorses);
-            const linuxIndex = Math.floor(Math.random() * numHorses);   // Índice aleatorio para Big Chungus
+
+            const availableModels = [
+                { model: prawnModel, name: "Gamba" },
+                { model: marioModel, name: "Mario" },
+                { model: bigchungus, name: "Big Chungus" },
+                { model: mcqueenModel, name: "Mc Queen" },
+                { model: shrekModel, name: "Shrek" },
+                { model: linuxModel, name: "Linux" },
+                { model: mewTwoModel, name: "mewTwo" }
+            ].filter(m => m.model);
+
+            if (availableModels.length < 5) {
+                throw new Error("No se han cargado suficientes modelos.");
+            }
+
+            const selectedModels = availableModels.sort(() => Math.random() - 0.5).slice(0, 5);
+
+            const shrekIndex = selectedModels.findIndex(model => model.name === "Shrek");
+            const marioIndex = selectedModels.findIndex(model => model.name === "Mario");
+            const bigChungusIndex = selectedModels.findIndex(model => model.name === "Big Chungus");
+            const mcqueenIndex = selectedModels.findIndex(model => model.name === "Mc Queen");
+            const linuxIndex = selectedModels.findIndex(model => model.name === "Linux");
+            const mewTwoIndex = selectedModels.findIndex(model => model.name === "mewTwo");
+            console.log(mewTwoIndex);
+            if (mewTwoModel) {
+                console.log(mewTwoModel.name);
+            }
+
+            const numHorses = 5; // Define the number of horses
 
             for (let i = 0; i < numHorses; i++) {
-                let horse;
-                if (i === marioIndex && marioModel) {
-                    horse = marioModel.clone();
-                } else if (i === bigChungusIndex && bigchungus) {
-                    horse = bigchungus.clone();
-                }else if (i === mcqueenIndex && mcqueenModel) {
-                        horse = mcqueenModel.clone();
-                } else if (i === shrekIndex && shrekModel) {
-                    horse = shrekModel.clone();
-                } else if (i === linuxIndex && linuxModel) {
-                    horse = linuxModel.clone();
-                } else {
-                    horse = prawnModel.clone();
-                }
+                const { model, name } = selectedModels[i % selectedModels.length];
+                const horse = model.clone();
 
                 // Colocar la gamba, Mario o Big Chungus en el centro de cada carril
                 horse.position.set(
@@ -129,20 +145,7 @@ async function main() {
                 selectionRenderer.setClearColor(0x000000, 0); // Hacer el fondo transparente
 
                 // Añadir modelo de gamba, Mario o Big Chungus a la escena de selección
-                let selectionHorse;
-                if (i === marioIndex && marioModel) {
-                    selectionHorse = marioModel.clone();
-                } else if (i === bigChungusIndex && bigchungus) {
-                    selectionHorse = bigchungus.clone();
-                }else if (i === mcqueenIndex && mcqueenModel) {
-                        selectionHorse = mcqueenModel.clone();
-                } else if (i === shrekIndex && shrekModel) {
-                    selectionHorse = shrekModel.clone();
-                } else if (i === linuxIndex && linuxModel) {
-                    selectionHorse = linuxModel.clone();
-                } else {
-                    selectionHorse = prawnModel.clone();
-                }
+                let selectionHorse = model.clone();
                 selectionHorse.scale.set(0.0001, 0.0001, 0.0001); // Reducir tamaño del modelo en la selección
                 selectionHorse.traverse((child) => {
                     if (child.isMesh) {
@@ -173,7 +176,7 @@ async function main() {
                 prawnNumber.style.color = "black";
                 prawnNumber.style.fontSize = "18px";
                 prawnNumber.style.marginTop = "10px";
-                prawnNumber.innerText = i === marioIndex ? `Mario` : i === linuxIndex ? `Linux`: i === bigChungusIndex ? `Big Chungus`: i === mcqueenIndex ? `Mc Queen`: i === shrekIndex ? `Shrek` : `Gamba ${i + 1}`;
+                prawnNumber.innerText = name;
                 prawnDiv.appendChild(prawnNumber);
 
                 prawnDiv.addEventListener("click", function () {
@@ -265,7 +268,10 @@ async function main() {
                             speeds[index] >= velocidadGallop[0] &&
                             speeds[index] < velocidadGallop[1]
                         ) {
-                            horse.position.y =
+                            if(index === mcqueenIndex){
+                                
+                            }else{
+                                horse.position.y =
                                 Math.sin(Date.now() * 0.01 * animations[index].speed) * 0.1;
                             horse.position.y =
                                 Math.abs(Math.sin(Date.now() * 0.01 * animations[index].speed)) *
@@ -273,6 +279,8 @@ async function main() {
                             horse.rotation.z =
                                 Math.sin(Date.now() * 0.01 * animations[index].speed) * 0.1;
                             horse.rotation.y = -Math.PI / 2; // Mirar al frente
+                            }
+                            
                         } else if (speeds[index] <= velocidadSpin) {
                             horse.rotation.y += 0.1 * animations[index].speed;
                         } else if (speeds[index] >= velocidadFast) {
@@ -325,6 +333,10 @@ async function main() {
                             horse.rotation.y = Math.PI / 2; // Mirar al frente
                         }
                         if (index === linuxIndex && speeds[index] > velocidadSpin) {
+                            horse.rotation.y = Math.PI / 2; // Mirar al frente
+                        }
+                        
+                        if (index === mewTwoIndex && speeds[index] > velocidadSpin) {
                             horse.rotation.y = Math.PI / 2; // Mirar al frente
                         }
 
