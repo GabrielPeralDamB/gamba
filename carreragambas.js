@@ -1,4 +1,4 @@
-import { cargarModelos, prawnModel, marioModel, bigchungus, shrekModel,mcqueenModel } from './modelos.js';
+import { cargarModelos, prawnModel, marioModel, bigchungus, shrekModel,mcqueenModel, linuxModel } from './modelos.js';
 
 let speeds = [0.01, 0.02, 0.05, 0.07, 0.1]; // Velocidades iniciales
 
@@ -78,7 +78,8 @@ async function main() {
             const marioIndex = Math.floor(Math.random() * numHorses); // Índice aleatorio para Mario
             const bigChungusIndex = Math.floor(Math.random() * numHorses);
             const shrekIndex = Math.floor(Math.random() * numHorses); 
-            const mcqueenIndex = Math.floor(Math.random() * numHorses);  // Índice aleatorio para Big Chungus
+            const mcqueenIndex = Math.floor(Math.random() * numHorses);
+            const linuxIndex = Math.floor(Math.random() * numHorses);   // Índice aleatorio para Big Chungus
 
             for (let i = 0; i < numHorses; i++) {
                 let horse;
@@ -90,6 +91,8 @@ async function main() {
                         horse = mcqueenModel.clone();
                 } else if (i === shrekIndex && shrekModel) {
                     horse = shrekModel.clone();
+                } else if (i === linuxIndex && linuxModel) {
+                    horse = linuxModel.clone();
                 } else {
                     horse = prawnModel.clone();
                 }
@@ -106,6 +109,7 @@ async function main() {
                 horse.traverse((child) => {
                     if (child.isMesh) {
                         child.material = child.material.clone();
+                        
                         //child.material.color.lerp(color, 0.5); // Aplicar color débil
                     }
                 });
@@ -134,6 +138,8 @@ async function main() {
                         selectionHorse = mcqueenModel.clone();
                 } else if (i === shrekIndex && shrekModel) {
                     selectionHorse = shrekModel.clone();
+                } else if (i === linuxIndex && linuxModel) {
+                    selectionHorse = linuxModel.clone();
                 } else {
                     selectionHorse = prawnModel.clone();
                 }
@@ -167,7 +173,7 @@ async function main() {
                 prawnNumber.style.color = "black";
                 prawnNumber.style.fontSize = "18px";
                 prawnNumber.style.marginTop = "10px";
-                prawnNumber.innerText = i === marioIndex ? `Mario` : i === bigChungusIndex ? `Big Chungus`: i === mcqueenIndex ? `Mc Queen`: i === shrekIndex ? `Shrek` : `Gamba ${i + 1}`;
+                prawnNumber.innerText = i === marioIndex ? `Mario` : i === linuxIndex ? `Linux`: i === bigChungusIndex ? `Big Chungus`: i === mcqueenIndex ? `Mc Queen`: i === shrekIndex ? `Shrek` : `Gamba ${i + 1}`;
                 prawnDiv.appendChild(prawnNumber);
 
                 prawnDiv.addEventListener("click", function () {
@@ -314,8 +320,11 @@ async function main() {
                         if (index === shrekIndex && speeds[index] > velocidadSpin) {
                             horse.rotation.y = Math.PI / 2; // Mirar al frente
                         }
-                        
+
                         if (index === mcqueenIndex && speeds[index] > velocidadSpin) {
+                            horse.rotation.y = Math.PI / 2; // Mirar al frente
+                        }
+                        if (index === linuxIndex && speeds[index] > velocidadSpin) {
                             horse.rotation.y = Math.PI / 2; // Mirar al frente
                         }
 
