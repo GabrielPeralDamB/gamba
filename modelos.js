@@ -16,7 +16,7 @@ function cargarModelos() {
             { name: "mcqueen", path: "McQueen/scene.gltf", scale: 0.8 },
             { name: "shrek", path: "shrek/scene.gltf", scale: 4 },
             { name: "linux", path: "linux/scene.gltf", scale: 4 },
-            { name: "mewtwo", path: "mewtwo/scene.gltf", scale: 0.06}
+            { name: "mewtwo", path: "css/scene.gltf", scale: 0.06}
         ];
 
         const shuffledModels = models.sort(() => Math.random() - 0.5).slice(0, 5);
