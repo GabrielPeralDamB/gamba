@@ -5,6 +5,7 @@ let shrekModel = null;
 let mcqueenModel = null;
 let linuxModel = null;
 let mewTwoModel = null;
+let cr7Model = null;
 
 function cargarModelos() {
     return new Promise((resolve, reject) => {
@@ -16,14 +17,15 @@ function cargarModelos() {
             { name: "mcqueen", path: "McQueen/scene.gltf", scale: 0.8 },
             { name: "shrek", path: "shrek/scene.gltf", scale: 4 },
             { name: "linux", path: "linux/scene.gltf", scale: 4 },
-            { name: "mewtwo", path: "css/scene.gltf", scale: 0.06}
+            { name: "mewtwo", path: "css/scene.gltf", scale: 0.06},
+            { name: "cr7", path: "cr7/scene.gltf", scale: 0.06}
         ];
 
         const shuffledModels = models.sort(() => Math.random() - 0.5).slice(0, 5);
 
         const loadModel = (index) => {
             if (index >= shuffledModels.length) {
-                const loadedModels = [prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, linuxModel, mewTwoModel].filter(m => m);
+                const loadedModels = [prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, linuxModel, mewTwoModel, cr7Model].filter(m => m);
                 if (loadedModels.length < 5) {
                     reject(new Error("No se han cargado suficientes modelos."));
                 } else {
@@ -56,6 +58,9 @@ function cargarModelos() {
                     case "mewtwo":
                         mewTwoModel = gltf.scene;
                         break;
+                    case "cr7":
+                        cr7Model = gltf.scene;
+                        break;
                 }
                 gltf.scene.scale.set(model.scale, model.scale, model.scale);
                 loadModel(index + 1);
@@ -69,4 +74,4 @@ function cargarModelos() {
     });
 }
 
-export { prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, linuxModel, mewTwoModel, cargarModelos };
+export { prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, linuxModel, mewTwoModel, cr7Model, cargarModelos };

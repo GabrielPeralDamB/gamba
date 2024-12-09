@@ -1,4 +1,4 @@
-import { cargarModelos, prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, linuxModel, mewTwoModel } from './modelos.js';
+import { cargarModelos, prawnModel, marioModel, bigchungus, shrekModel, mcqueenModel, linuxModel, mewTwoModel,cr7Model } from './modelos.js';
 
 let speeds = [0.01, 0.02, 0.05, 0.07, 0.1]; // Velocidades iniciales
 
@@ -74,6 +74,7 @@ async function main() {
             console.log(mcqueenModel);
             console.log(linuxModel);
             console.log(mewTwoModel);
+            console.log(cr7Model);
             // Crear gambas
             const horses = [];
             const laneOffset = 2; // Desplazamiento para centrar en cada carril
@@ -87,7 +88,8 @@ async function main() {
                 { model: mcqueenModel, name: "Mc Queen" },
                 { model: shrekModel, name: "Shrek" },
                 { model: linuxModel, name: "Linux" },
-                { model: mewTwoModel, name: "mewTwo" }
+                { model: mewTwoModel, name: "mewTwo" },
+                { model: cr7Model, name: "cr7" }
             ].filter(m => m.model);
 
             if (availableModels.length < 5) {
@@ -102,10 +104,8 @@ async function main() {
             const mcqueenIndex = selectedModels.findIndex(model => model.name === "Mc Queen");
             const linuxIndex = selectedModels.findIndex(model => model.name === "Linux");
             const mewTwoIndex = selectedModels.findIndex(model => model.name === "mewTwo");
-            console.log(mewTwoIndex);
-            if (mewTwoModel) {
-                console.log(mewTwoModel.name);
-            }
+            const cr7Index = selectedModels.findIndex(model => model.name === "cr7");
+
 
             const numHorses = 5; // Define the number of horses
 
@@ -337,6 +337,10 @@ async function main() {
                         }
                         
                         if (index === mewTwoIndex && speeds[index] > velocidadSpin) {
+                            horse.rotation.y = Math.PI / 2; // Mirar al frente
+                        }
+
+                        if (index === cr7Index && speeds[index] > velocidadSpin) {
                             horse.rotation.y = Math.PI / 2; // Mirar al frente
                         }
 
